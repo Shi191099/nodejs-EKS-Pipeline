@@ -58,8 +58,8 @@ podTemplate(yaml: '''
     }
    stage('Deploy'){
             
-                 sh 'kubectl apply -f flux.yaml'\
-                 sh 'kubectl apply -f ingress.yaml'
+                 sh 'kubectl apply -f flux.yaml'
+                 
             } 
    
 }
