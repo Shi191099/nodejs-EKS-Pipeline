@@ -61,6 +61,6 @@ podTemplate(yaml: '''
                  sh 'kubectl apply -f flux.yaml'\
                  sh 'kubectl apply -f ingress.yaml'
             } 
-  
+   }
 }
 }
