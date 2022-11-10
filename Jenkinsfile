@@ -57,7 +57,7 @@ podTemplate(yaml: '''
       }
     }
    stage('Deploy'){
-            
+     container('kaniko') {       
                  sh 'kubectl apply -f flux.yaml'
                  
             } 
