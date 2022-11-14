@@ -56,11 +56,15 @@ podTemplate(yaml: '''
         }
       }
     }
-   stage('Deploy'){
-     container('kaniko') {       
-                 sh 'kubectl apply -f flux.yaml'
-                 
-            } 
-   }
-}
+    stage('K8S Deploy') {
+        steps{   
+            script {
+                withKubeConfig([credentialsId: 'K8S', serverUrl: '']) {
+                sh ('kubectl apply -f  flux.yaml')
+                sh ('kubectl apply -f  ingress.yaml')    
+                }
+            }
+        }
+     }
+  }
 }
