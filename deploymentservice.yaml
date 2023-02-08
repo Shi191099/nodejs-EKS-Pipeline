@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: nodejs-k8s
-          image: 957288871734.dkr.ecr.ap-southeast-1.amazonaws.com/images
+          image: 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5
           ports:
             - containerPort: 80
               protocol: TCP
