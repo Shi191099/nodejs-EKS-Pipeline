@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: awsome-app-flux
-        image: 957288871734.dkr.ecr.ap-southeast-1.amazonaws.com/images:77
+        image: 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
         ports:
           - containerPort: 8080
 
