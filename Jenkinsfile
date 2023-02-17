@@ -66,7 +66,7 @@ podTemplate(yaml: '''
             export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             
-            echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
+            sudo echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
             
             /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
 
