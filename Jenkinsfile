@@ -56,6 +56,7 @@ podTemplate(yaml: '''
               credentialsId: 'aws-credentials'
           ]]) {
             sh '''
+             aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com
 //             /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
 //             /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest 
             /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER
