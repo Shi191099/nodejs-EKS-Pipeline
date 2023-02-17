@@ -51,30 +51,41 @@ podTemplate(yaml: '''
         }
       }
     }    
-    stage('Build nodejs Image') {
-      container('kaniko') {
-        stage('Build a Go project)') {
-          withCredentials([[
-              $class: 'AmazonWebServicesCredentialsBinding', 
-              accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
-              secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-              credentialsId: 'aws-credentials'
-          ]]) {
-//            sh "aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com"
-            sh '''
-            mkdir -p /kaniko/.docker
-            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+//     stage('Build nodejs Image') {
+//       container('kaniko') {
+//         stage('Build a Go project)') {
+//           withCredentials([[
+//               $class: 'AmazonWebServicesCredentialsBinding', 
+//               accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+//               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+//               credentialsId: 'aws-credentials'
+//           ]]) {
+// //            sh "aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com"
+//             sh '''
+//             mkdir -p /kaniko/.docker
+//             export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+//             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             
-            sudo echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
+//             sudo echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
             
-            /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
+//             /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
 
-            '''
+//             '''
             
-                    }
-                }
-            }
-        }
-    }
+//                     }
+//                 }
+//             }
+//         }
+          
+             stage('Build nodejs Image') {
+                     container('kaniko') {
+                             stage('Build a Go project') {
+                                     sh '''
+                                     /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/cl5:$BUILD_NUMBER && \
+                                     /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/cl5:latest
+                                     '''
+                             }
+                     }
+             }
+  }
 }
