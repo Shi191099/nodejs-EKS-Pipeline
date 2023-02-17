@@ -60,7 +60,9 @@ podTemplate(yaml: '''
               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
               credentialsId: 'aws-credentials'
           ]]) {
+            sh "aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com"
             sh '''
+            mkdir -p /kaniko/.docker
             export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             export AWS_DEFAULT_REGION=${AWS_REGION}
@@ -68,6 +70,7 @@ podTemplate(yaml: '''
             /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
 
             '''
+            
                     }
                 }
             }
