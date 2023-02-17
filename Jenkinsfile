@@ -65,9 +65,12 @@ podTemplate(yaml: '''
             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             export AWS_DEFAULT_REGION=${AWS_REGION}
             
+            
 //            /kaniko/executor -f ${WORKSPACE}/nodejs-EKS-Pipeline/Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination=${ECR_REPO}/${ECR_REPO_NAME}:$BUILD_NUMBER --destination=${ECR_REPO}/${ECR_REPO_NAME}:latest
-            /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
-                    '''
+//            /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
+            /kaniko/executor -f ./Dockerfile -c ${WORKSPACE}/nodejs-EKS-Pipeline --force --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
+
+            '''
                     }
                 }
             }
