@@ -53,7 +53,7 @@ podTemplate(yaml: '''
               $class: 'AmazonWebServicesCredentialsBinding', 
               accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-              credentialsId: 'AWS_ACCOUNT'
+              credentialsId: 'aws'
           ]]) {
             sh '''
 //             /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
