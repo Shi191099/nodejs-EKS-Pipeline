@@ -1,3 +1,9 @@
+environment {
+        AWSCRED="aws-credentials"
+        AWS_REGION="ca-central-1"
+        ECR_REPO="805392809179.dkr.ecr.ca-central-1.amazonaws.com"
+        ECR_REPO_NAME="clari5"
+}
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -32,14 +38,7 @@ podTemplate(yaml: '''
             items:
             - key: .dockerconfigjson
               path: config.json
-''') 
-environment {
-        AWSCRED="aws-credentials"
-        AWS_REGION="ca-central-1"
-        ECR_REPO="805392809179.dkr.ecr.ca-central-1.amazonaws.com"
-        ECR_REPO_NAME="clari5"
-}
-{
+'''){
     
   node(POD_LABEL) {
     stage('Get a nodejs project') {
