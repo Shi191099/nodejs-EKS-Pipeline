@@ -55,7 +55,7 @@ podTemplate(yaml: '''
                                      sh 'docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 805392809179.dkr.ecr.ca-central-1.amazonaws.com' //985729960198.dkr.ecr.eu-west-2.amazonaws.com'
                                  
                                      sh '''
-                                     /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
+          //                           /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
                                      /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
                                      '''
                                  }
