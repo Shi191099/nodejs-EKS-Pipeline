@@ -27,7 +27,8 @@ podTemplate(yaml: '''
       restartPolicy: Never
       volumes:
       - name: docker-config
-        configMap: docker-config
+        configMap: 
+          name: docker-config
 '''){
     
   node(POD_LABEL) {
