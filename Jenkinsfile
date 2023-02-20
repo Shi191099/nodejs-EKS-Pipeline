@@ -22,16 +22,17 @@ podTemplate(yaml: '''
         args:
         - 9999999
         volumeMounts:
-        - name: kaniko-secret
+        - name: docker-config
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
-      - name: kaniko-secret
-        secret:
-            secretName: dockercred
-            items:
-            - key: .dockerconfigjson
-              path: config.json
+      - name: docker-config
+        configMap: docker-config
+ //       secret:
+ //           secretName: dockercred
+ //           items:
+ //           - key: .dockerconfigjson
+ //             path: config.json
 '''){
     
   node(POD_LABEL) {
