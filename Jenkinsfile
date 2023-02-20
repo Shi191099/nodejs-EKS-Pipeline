@@ -28,11 +28,6 @@ podTemplate(yaml: '''
       volumes:
       - name: docker-config
         configMap: docker-config
- //       secret:
- //           secretName: dockercred
- //           items:
- //           - key: .dockerconfigjson
- //             path: config.json
 '''){
     
   node(POD_LABEL) {
