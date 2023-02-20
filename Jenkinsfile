@@ -53,35 +53,13 @@ podTemplate(yaml: '''
     }   
       stage('Build nodejs Image') {
               
- //             sh "aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com"
           container('kaniko') {
               stage('Build a Go project') {             
-//                   withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
-                   withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
-                           "credHelpers": {
-                                   "805392809179.dkr.ecr.ca-central-1.amazonaws.com": "ecr-login"
-                           }
+                  withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
                          sh '''    
                          /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER
                          '''                     
                    }
-                     
-//                  }
-//                 withCredentials([[
-//                 $class: 'AmazonWebServicesCredentialsBinding',
-//                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-//                 credentialsId: '',
-//                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-//                 ]]){
-//                 container('kaniko') {
-//                     sh '''
-//                     export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-//                     export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-//                     export AWS_DEFAULT_REGION=${AWS_REGION}
-//                     /kaniko/executor -f Dockerfile --force --destination=${ECR_REPO}/${ECR_REPO_NAME}:$BUILD_NUMBER --destination=${ECR_REPO}/${ECR_REPO_NAME}:latest
-//                     '''
-//                     }
-//                 }
               }
           }
       }
