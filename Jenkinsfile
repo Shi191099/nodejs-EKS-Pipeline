@@ -42,7 +42,6 @@ podTemplate(yaml: '''
           sh '''
             echo pwd
           '''
-          sh 'aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com' 
         }
       }
     }   
@@ -50,12 +49,10 @@ podTemplate(yaml: '''
           container('kaniko') {
               stage('Build a Go project') {             
                   withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
-              //        sh 'docker login -u AWS -p $(aws ecr get-login-password --region ca-central-1) 805392809179.dkr.ecr.ca-central-1.amazonaws.com' //985729960198.dkr.ecr.eu-west-2.amazonaws.com'
-                      
-                      sh '''
+                     sh '''
                        /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
                        /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest
-                      '''
+                     '''
                   }
               }
           }
