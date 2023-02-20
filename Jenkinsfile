@@ -1,9 +1,3 @@
-environment {
-        AWSCRED="aws-credentials"
-        AWS_REGION="ca-central-1"
-        ECR_REPO="805392809179.dkr.ecr.ca-central-1.amazonaws.com"
-        ECR_REPO_NAME="clari5"
-}
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -55,11 +49,13 @@ podTemplate(yaml: '''
               
           container('kaniko') {
               stage('Build a Go project') {             
-                  withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
+         //         withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
+                  docker.withRegistry('https://805392809179.dkr.ecr.ca-central-1.amazonaws.com', 'ecr:ca-central-1:aws-credentials') {
                          sh '''    
                          /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER
-                         '''                     
-                   }
+                         '''   
+                  }
+        //           }
               }
           }
       }
