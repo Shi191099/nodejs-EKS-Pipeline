@@ -32,9 +32,9 @@ podTemplate(yaml: '''
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
-    - name: docker-config
-      configMap:
-        name: docker-config
+      - name: docker-config
+        configMap:
+          name: docker-config
 '''){
     
   node(POD_LABEL) {
