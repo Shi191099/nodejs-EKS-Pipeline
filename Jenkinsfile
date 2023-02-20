@@ -28,13 +28,16 @@ podTemplate(yaml: '''
         args:
         - 9999999
         volumeMounts:
-        - name: docker-config
+        - name: kaniko-secret
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
-      - name: docker-config
-        configMap:
-          name: docker-config
+      - name: kaniko-secret
+        secret:
+            secretName: dockercred
+            items:
+            - key: .dockerconfigjson
+              path: config.json
 '''){
     
   node(POD_LABEL) {
@@ -49,6 +52,7 @@ podTemplate(yaml: '''
       }
     }   
       stage('Build nodejs Image') {
+              sh "aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 805392809179.dkr.ecr.ca-central-1.amazonaws.com"
           container('kaniko') {
               stage('Build a Go project') {             
 //                   withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
