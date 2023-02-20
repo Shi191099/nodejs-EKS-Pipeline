@@ -50,7 +50,7 @@ podTemplate(yaml: '''
               stage('Build a Go project') {             
                   withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
                      sh '''                       
-                       /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:v$BUILD_NUMBER
+                       /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest --destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER
                      '''
                   }
               }
