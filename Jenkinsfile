@@ -28,7 +28,7 @@ podTemplate(yaml: '''
         args:
         - 9999999
         volumeMounts:
-        - name: kaniko-secret
+        - name: docker-config
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
