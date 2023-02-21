@@ -52,7 +52,7 @@ podTemplate(yaml: '''
          //         withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
          //         docker.withRegistry('https://805392809179.dkr.ecr.ca-central-1.amazonaws.com', 'ecr:ca-central-1:aws-credentials') {
                          sh '''    
-                         /kaniko/executor --context `pwd` --destination shikashi/kaniko-demo-image:1.1
+                         /kaniko/executor --context `pwd` --destination shikashi/kaniko-demo-image:1.0
                          '''   
             //      }
         //           }
