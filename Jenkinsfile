@@ -32,11 +32,11 @@ podTemplate(yaml: '''
             items:
             - key: .dockerconfigjson
               path: config.json
-'''){
+''') {
     
   node(POD_LABEL) {
     stage('Get a nodejs project') {
-      git url: 'https://github.com/Shi191099/nodejs-EKS-Pipeline.git', branch: 'master'    
+      git url: 'https://github.com/PottaAkhil/nodejs-OBT.git', branch: 'master'    
       container('nodejs') {
         stage('Build a nodejs project') {
           sh '''
@@ -44,21 +44,20 @@ podTemplate(yaml: '''
           '''
         }
       }
-    }   
-      stage('Build nodejs Image') {
-              
-          container('kaniko') {
-              stage('Build a Go project') {             
-         //         withCredentials([usernameColonPassword(credentialsId: 'ecr:ca-central-1:aws-credentials', variable: 'ecr-credentials')]) {
-         //         docker.withRegistry('https://805392809179.dkr.ecr.ca-central-1.amazonaws.com', 'ecr:ca-central-1:aws-credentials') {
-                         sh ''' 
-                          /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
-                          /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest 
-                         '''   
-            //      }
-        //           }
-              }
-          }
+    }
+    
+    stage('Build nodejs Image') {
+      container('kaniko') {
+        stage('Build a Go project') {
+          sh '''
+            /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
+            /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest 
+          '''
+        }
       }
+    }
+   
+                
+     
   }
 }
