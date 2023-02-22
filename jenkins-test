@@ -1,0 +1,50 @@
+podTemplate(yaml: '''
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: kaniko
+  spec:
+    containers:
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:latest
+      args:
+      - "--context=git://github.com/Shi191099/nodejs-EKS-Pipeline"
+  #    - "--destination=shikashi/kaniko-demo-image:1.9"
+  #    - "--destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/cl5:latest"
+      - "--destination=805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest"
+  #    - "--destination=805392809179.dkr.ecr.ap-southeast-2.amazonaws.com/oz-pipeline-04:latest"
+
+      volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker
+    restartPolicy: Never
+    volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: dockercred
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+''') {
+  node(POD_LABEL) {
+    stage('Get a nodejs project') {
+      git url: 'https://github.com/Shi191099/nodejs-EKS-Pipeline.git', branch: 'master'    
+      container('nodejs') {
+        stage('Build a nodejs project') {
+          sh '''
+            echo pwd
+          '''
+        }
+      }
+    } 
+stage('Build nodejs Image') {
+              
+          container('kaniko') {
+              stage('Build a Go project') {             
+                /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:$BUILD_NUMBER && \
+                /kaniko/executor --context `pwd` --destination 805392809179.dkr.ecr.ca-central-1.amazonaws.com/clari5:latest 
+              }
+          }
+      }
+  }
+}
