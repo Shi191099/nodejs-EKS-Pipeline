@@ -51,7 +51,6 @@ podTemplate(yaml: '''
         stage('Build a Go project') {
           sh '''
             /kaniko/executor --context `pwd` --destination 321019347814.dkr.ecr.ap-southeast-2.amazonaws.com/cl5:$BUILD_NUMBER && \
-            /kaniko/executor --context `pwd` --destination 321019347814.dkr.ecr.ap-southeast-2.amazonaws.com/cl5:latest 
           '''
         }
       }
